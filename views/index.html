@@ -11,13 +11,53 @@
 	<body>
 		<script src="javascripts/three.min.js"></script>
 		<script>
-			var scene = new THREE.scene();
+      // Scene setup
+			var scene = new THREE.Scene();
+      /* Camera setup
+      (
+      field of view,
+      aspect ratio(normally width of the element/ height),
+      near clipping plane,
+      far clipping plane,
+        These two planes are used to stop things that are too close
+        or too far from rendering for performance
+      )
+      */
       var camera = new THREE.PerspectiveCamera(75,
         window.innerWidth / window.innerHeight, 0.1, 1000);
+      /* Renderer setup
+      .setSize(
+      width of app,
+      height of app,
+        In this case we're using the browser width/height
+      (optional)false
+        setting a false at the end will display the app in full
+        browser size but actually set the resolution to whatever
+        the preceding to numbers are.
 
+        You can use this to render at a lower resolution for better performance
+
+      )
+
+      */
       var renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
+
+      // append renderer to html document.
       document.body.appendChild(renderer.domElement);
+
+      var geometry = new THREE.BoxGeometry(1, 1, 1);
+      var material = new THREE.MeshBasicMaterial( {color: 0x00ffee });
+      var cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
+
+      camera.position.z = 5;
+
+      function render() {
+        requestAnimationFrame(render);
+        renderer.render(scene, camera);
+      }
+      render();
 		</script>
 	</body>
 </html>
