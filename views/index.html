@@ -46,15 +46,32 @@
       // append renderer to html document.
       document.body.appendChild(renderer.domElement);
 
+      // Object that contains all the points(veritices) and fill(faces)
+      // of the cube.
       var geometry = new THREE.BoxGeometry(1, 1, 1);
+      /* material
+      color,
+        For this instance we are only supplying a color attribute
+      */
       var material = new THREE.MeshBasicMaterial( {color: 0x00ffee });
+      /* mesh
+      geometry,
+      material,
+        a mesh applies the material to the geometry.
+        We can then insert the produced object into the scene.
+      */
       var cube = new THREE.Mesh(geometry, material);
+      // By default when adding to the scene the object
+      // will be added to coordinates 0, 0, 0
       scene.add(cube);
 
+      // move the camera so its not inside of the object
       camera.position.z = 5;
 
       function render() {
         requestAnimationFrame(render);
+        cube.rotation.x += 0.005;
+        cube.rotation.y += 0.01;
         renderer.render(scene, camera);
       }
       render();
